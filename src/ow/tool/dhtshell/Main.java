@@ -32,6 +32,7 @@ import org.apache.commons.cli.DefaultParser;
 
 import ow.dht.DHT;
 import ow.dht.DHTFactory;
+import ow.dht.DHTConfiguration;
 import ow.messaging.Signature;
 import ow.messaging.util.AccessController;
 import ow.oasis.OASISResponder;
@@ -144,6 +145,7 @@ public final class Main extends AbstractDHTBasedTool<String>
 		opts.addOption("W", "web", false, "invoke a web/XML-RPC server");
 		opts.addOption("M", "showmap", false, "show a Google Map on a web interface");
 		opts.addOption("O", "oasis", true, "invoke an OASIS responder");
+        opts.addOption("R", "replica", true, "replication node num");
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = null;
@@ -193,10 +195,16 @@ public final class Main extends AbstractDHTBasedTool<String>
 		// and initialize a DHT
 		DHT<String> dht = null;
 		try {
-			dht = super.initialize(Signature.APPLICATION_ID_DHT_SHELL, (short)0x10000,
-					DHTFactory.getDefaultConfiguration(),
-					COMMAND, cmd);
-		}
+            DHTConfiguration config = DHTFactory.getDefaultConfiguration();
+            if (cmd.hasOption('R')) {
+                optVal = cmd.getOptionValue('R');
+                System.out.println(optVal);
+                config.setNumReplica(Integer.parseInt(optVal));
+            }
+            dht = super.initialize(Signature.APPLICATION_ID_DHT_SHELL, (short)0x10000,
+                    config,
+                    COMMAND, cmd);
+        }
 		catch (Exception e) {
 			System.err.println("An Exception thrown:");
 			e.printStackTrace();

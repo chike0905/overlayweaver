@@ -20,7 +20,7 @@ package ow.routing.linearwalker;
 import ow.routing.RoutingAlgorithmConfiguration;
 
 public class LinearWalkerConfiguration extends RoutingAlgorithmConfiguration {
-	public final static int DEFAULT_SUCCESSOR_LIST_LENGTH = 8;	// infinity if the value <= 0
+	public final static int DEFAULT_SUCCESSOR_LIST_LENGTH = 0;	// infinity if the value <= 0
 	public final static boolean DEFAULT_AGGRESSIVE_JOINING_MODE = false;
 	public final static boolean DEFAULT_UPDATE_ROUTING_TABLE_BY_ALL_COMMUNICATIONS = false;
 
